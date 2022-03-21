@@ -90,7 +90,7 @@ def get_results(url, result_type='race', table_number=2):
 
         for row in table.find_all('tr')[1:]:
             # The first one is the columns titles, the code above is
-            # getting the full table. Not sure if a variable is necesary, I guess not.
+            # getting the full table. 
     
             table_data = row.find_all('td')
             position = table_data[0].text.strip() # Position
