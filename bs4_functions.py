@@ -31,7 +31,7 @@ def driver_row_generator(url_array):
         print(f'{url_array.index(url) + 1}/{len(url_array)}') 
         # This final code will print the progress of the action.
 
-def get_links_from_table(url, table_number, cell_position, v_list, year_flag=False,s_name=True):
+def get_links_from_table(url, table_number, cell_position, verification_list, year_flag=False,s_name=True):
     """Given a url, a table_number and a cell where the links are, this generator gets every name and the link into an array. """
     
     ## Create Soup
@@ -47,16 +47,16 @@ def get_links_from_table(url, table_number, cell_position, v_list, year_flag=Fal
 
         ## Get all the names and urls
         name = cell.text
+
         ## Just an extra step in order to add the years to the Grand Prixes
         if year_flag:
             name = name + ' ' + year
+
         url = cell.find('a')['href']
 
-
-
-        if name not in v_list : # Exclude duplicates (This can be done in other places.)
+        if name not in verification_list : # Exclude duplicates (This can be done in other places.)
             yield [name, url]
-            v_list.append(name)
+            verification_list.append(name)
             if s_name:
                 print(name)
 
