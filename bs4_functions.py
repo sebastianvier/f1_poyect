@@ -54,11 +54,14 @@ def get_links_from_table(url, table_number, cell_position, verification_list, ye
 
         url = cell.find('a')['href']
 
-        if name not in verification_list : # Exclude duplicates (This can be done in other places.)
+        if url not in verification_list: # Exclude duplicates (This can be done in other places.)
             yield [name, url]
-            verification_list.append(name)
+            verification_list.append(url)
+            print(url not in verification_list)
             if s_name:
                 print(name)
+        else:
+            print("already there")
 
 def get_results(url, result_type='race', table_number=2):
     """Given a url with the results select race or grid and specify which table are the results on"""
