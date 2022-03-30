@@ -47,21 +47,21 @@ def get_links_from_table(url, table_number, cell_position, verification_list, ye
 
         ## Get all the names and urls
         name = cell.text
-
         ## Just an extra step in order to add the years to the Grand Prixes
         if year_flag:
             name = name + ' ' + year
+
+
 
         url = cell.find('a')['href']
 
         if url not in verification_list: # Exclude duplicates (This can be done in other places.)
             yield [name, url]
             verification_list.append(url)
-            print(url not in verification_list)
             if s_name:
                 print(name)
-        else:
-            print("already there")
+        # else:
+        #     print("already there") ## This 2 lines are for testing
 
 def get_results(url, result_type='race', table_number=2):
     """Given a url with the results select race or grid and specify which table are the results on"""
