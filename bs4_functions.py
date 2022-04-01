@@ -3,7 +3,34 @@ import urllib.request as urlr
 import numpy as np
 from bs4 import BeautifulSoup
 from datetime import datetime
+from urllib.parse import urlparse
 
+
+def circuit_row_generator(url_array):
+    """ This will get the driver info needed as an array"""
+    ## The yielding is done authomatically because there is
+    ## only one scrap to do in each url. ::
+
+    for url in url_array: 
+        
+        url = url[1] # In the url_array there are 2 elements
+        path = urlparse(url).path
+        print(path)
+        
+        ## Create the soup based on the url
+        url = urlr.urlopen(url)
+        soup = BeautifulSoup(url, 'html.parser')   
+            
+        ## Get the info
+        table = soup.find('table')
+
+        name = " ".join(path.split('/')[-1].split('-'))
+        name = name.title()
+        country = table.find_all('tr')[0].find_all('td')[1].text.strip()
+        coordinates = table.find_all('tr')[1].find_all('td')[1].text.strip()
+            
+        ## Return array with the info
+        yield [name, country, coordinates]
 
 def driver_row_generator(url_array):
     def get_driver_info(url):
