@@ -15,7 +15,6 @@ def circuit_row_generator(url_array):
         
         url = url[1] # In the url_array there are 2 elements
         path = urlparse(url).path
-        print(path)
         
         ## Create the soup based on the url
         url = urlr.urlopen(url)
