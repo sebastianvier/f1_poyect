@@ -57,6 +57,31 @@ def driver_row_generator(url_array):
         print(f'{url_array.index(url) + 1}/{len(url_array)}') 
         # This final code will print the progress of the action.
 
+def get_constructor_links(url_array, verification_list):
+    def season_constructor_gen(url):
+        """Given a single url, this functions returns all the constructor in that url"""
+
+        ## Get all the rows needed
+        url = urlr.urlopen(url)
+        soup = BeautifulSoup(url, features="lxml")
+        rows = soup.find('table').find_all('tr')[1:] # 1: because the first row is usually just a header.
+
+        ## Get a url for each row
+        for row in rows[1:]:
+            anchor = row.find_all('a')[2]
+
+            name = anchor.text
+            url  = anchor['href']
+
+            if url not in verification_list:
+                verification_list.append(url)
+                yield [name, url]
+                
+    for url in url_array: # Because this will used for every url in the url_array.
+        array = [i for i in season_constructor_gen(url)]
+        if len(array) != 0: # There are years where there is no new teams, this is impossible to concatenate
+            yield np.array(array)
+
 def get_links_from_table(url, table_number, cell_position, verification_list, year_flag=False,s_name=True):
     """Given a url, a table_number and a cell where the links are, this generator gets every name and the link into an array. """
     
