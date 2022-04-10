@@ -31,6 +31,37 @@ def circuit_row_generator(url_array):
         ## Return array with the info
         yield [name, country, coordinates]
 
+def constructor_info(url_array):
+    def get_seasons(soup):
+        field_sets = soup.find_all('fieldset')
+        
+        ## Return the anchors of fieldset if its h2 is seasons
+        for field_set in field_sets:
+            if field_set.find('h2').text == 'seasons':
+                return field_set.find_all('a')
+                break
+            else:
+                pass
+        pass
+    
+    for url in url_array:     
+        ## Open the url and get the table
+        url = urlr.urlopen(url[1])
+        soup = BeautifulSoup(url, features="lxml")
+        table = soup.find('table')
+
+        ## Get all the values
+        nationality  = table.find_all('td')[1].text.strip()
+        name = soup.find('h1').text.split("-")[-1].strip()
+        seasons = get_seasons(soup)
+        ## This is for the first and last_year
+        start = seasons[0].text
+        end = seasons[-1].text
+        entries = len(seasons)
+        
+        ## yield the values
+        yield [name, nationality, start, end, entries]
+
 def driver_row_generator(url_array):
     def get_driver_info(url):
         """ This will get the driver info needed as an array"""
@@ -196,4 +227,5 @@ def season_link_gen(rows):
                row.find('a')['href']] 
         # The text is just the year of the season. So this will add 'season as well.'
         # There is only one link so this is what we need.              
+
 
