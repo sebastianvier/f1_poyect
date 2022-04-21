@@ -145,7 +145,6 @@ def get_links_from_table(url, table_number, cell_position, verification_list, ye
         # else:
         #     print("already there") ## This 2 lines are for testing
 
-
 def get_races(races_urls):
     for race in races_urls:
         race_name = race[0]
@@ -161,7 +160,6 @@ def get_races(races_urls):
         circuit = table.find_all('span')[2].get_text().strip()
         
         yield [race_name, circuit, date]
-
 
 def get_results(url, result_type='race', table_number=2):
     """Given a url with the results select race or grid and specify which table are the results on"""
