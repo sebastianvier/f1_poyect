@@ -17,3 +17,17 @@ CREATE TABLE drivers (
 );
 
 SELECT * FROM DRIVERS;
+
+
+## 1) First table Drivers
+## This table does not have foreign keys
+
+
+CREATE TABLE constructors (
+    ConstructorId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    Name varchar(50) NOT NULL,
+    Nationality varchar(50) NOT NULL,
+    StartYear varchar(4),
+    EndYear varchar(4),
+    entries INT
+    );
